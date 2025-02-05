@@ -39,6 +39,7 @@ async function getTokenPoolData(chainId, tokenAddress) {
 
 // Endpoint: /projects (To detect new projects)
 app.get('/projects', async (req, res) => {
+  console.log("/projects is being called");
   try {
     // Get the latest token profiles
     const tokenProfiles = await getLatestTokenProfiles();

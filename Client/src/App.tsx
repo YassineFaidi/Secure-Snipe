@@ -20,7 +20,6 @@ function App() {
 
       // Directly using the response as an array
       const data: Project[] = await response.json();
-      console.log("Received data:", data);
       setProjects(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
