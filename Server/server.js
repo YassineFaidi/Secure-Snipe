@@ -13,6 +13,12 @@ app.use((req, res, next) => {
 // Use the project routes
 app.use('/projects', projectRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Export the app instead of listening here, so that it can be tested
+module.exports = app;
+
+// Start the server only if the script is run directly
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
