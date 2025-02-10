@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px theme(colors.blue.400 / 20%); }
+  50% { box-shadow: 0 0 20px theme(colors.blue.400 / 30%); }
+  100% { box-shadow: 0 0 5px theme(colors.blue.400 / 20%); }
+}
+
+body {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-glow {
+  animation: glow 2s infinite;
+}

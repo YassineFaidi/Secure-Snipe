@@ -1,0 +1,46 @@
+image: node:22
+services:
+  - docker:dind
+
+stages:
+  - lint
+  - test
+  - security
+  - build
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  paths:
+    - Client/node_modules/
+    - Server/node_modules/
+
+lint_and_test:
+  stage: lint
+  script:
+    - cd Client && npm install && npm run lint && npm run test
+    - cd ../Server && npm install && npm run lint && npm run test
+  only:
+    - main
+
+security_scan:
+  stage: security
+  script:
+    - cd Client && npm install && export SNYK_TOKEN=$SNYK_TOKEN && npx snyk test --severity-threshold=high
+    - cd ../Server && npm install && export SNYK_TOKEN=$SNYK_TOKEN && npx snyk test --severity-threshold=high
+  only:
+    - main
+
+build_and_push:
+  image: docker:latest
+  stage: build
+  script:
+    - echo $DOCKER_HUB_PASSWORD | docker login -u yassinefaidi --password-stdin
+    - docker build --cache-from yassinefaidi/secure-snipe-client:latest -t yassinefaidi/secure-snipe-client:latest Client/
+    - docker build --cache-from yassinefaidi/secure-snipe-server:latest -t yassinefaidi/secure-snipe-server:latest Server/
+    - docker push yassinefaidi/secure-snipe-client:latest
+    - docker push yassinefaidi/secure-snipe-server:latest
+  only:
+    - main
