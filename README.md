@@ -41,7 +41,7 @@ Before running this application, make sure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Secure-Snipe.git
+git clone https://github.com/YassineFaidi/Secure-Snipe.git
 cd Secure-Snipe
 ```
 
